@@ -37,10 +37,9 @@
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    background: #555555;
+    background: #4CAF50;
     color: white;
     border: none;
-    cursor: not-allowed;
     display: block;
     text-align: left;
   }
@@ -71,7 +70,7 @@
   <iframe  id="form" src="https://docs.google.com/forms/d/e/1FAIpQLSeWdz89JkBlm6-GsBvBhM6zh5chPZq1PDSmuC7CSzv8mebgaw/viewform?embedded=true"
     width="640" height="687" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
-  <button id="startQuizBtn" onclick="startQuiz()" disabled>I have submitted the form – Start Quiz</button>
+  <button id="startQuizBtn" onclick="startQuiz()">I have submitted the form – Start Quiz</button>
 
   <div id="quiz"></div>
   <div id="result"></div>
@@ -245,13 +244,6 @@
 
     const quizContainer = document.getElementById('quiz');
     const resultContainer = document.getElementById('result');
-
-    setTimeout(() => {
-    document.getElementById('startQuizBtn').disabled = false;
-    document.getElementById('startQuizBtn').style.cursor = 'pointer';
-    document.getElementById('startQuizBtn').style.background = #4CAF50;  
-    }, 40000);
-
 
     function startQuiz() {
       document.getElementById('startQuizBtn').style.display = 'none';
