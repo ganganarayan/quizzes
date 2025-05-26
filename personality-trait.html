@@ -30,11 +30,6 @@
     font-size: 16px;
     text-align: left;
     box-sizing: border-box;
-  }
-
-  .sattva,
-  .rajas,
-  .tamas {
     background-color: #ffffff;
   }
 
@@ -42,7 +37,7 @@
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
-    background: #4CAF50;
+    background: #555555;
     color: white;
     border: none;
     cursor: not-allowed;
@@ -254,6 +249,7 @@
     setTimeout(() => {
     document.getElementById('startQuizBtn').disabled = false;
     document.getElementById('startQuizBtn').style.cursor = 'pointer';
+    document.getElementById('startQuizBtn').style.background = #4CAF50;  
     }, 40000);
 
 
