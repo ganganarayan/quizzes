@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personality Trait</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f0f5f1;
+    color: #333;
+    margin: 0;
+  }
+
+  #quiz,
+  #result {
+    display: none;
+    width: 100%;
+    max-width: 700px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .options button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  .sattva,
+  .rajas,
+  .tamas {
+    background-color: #ffffff;
+  }
+
+  #startQuizBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    cursor: not-allowed;
+    display: block;
+    text-align: left;
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 10px;
+    }
+
+    .options button {
+      font-size: 14px;
+      padding: 12px;
+    }
+
+    #startQuizBtn {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Personality Trait</h1>
+
+  <p id="fill-form">Please fill out the following form to continue:</p>
+
+  <iframe  id="form" src="https://docs.google.com/forms/d/e/1FAIpQLSeWdz89JkBlm6-GsBvBhM6zh5chPZq1PDSmuC7CSzv8mebgaw/viewform?embedded=true"
+    width="640" height="687" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+  <button id="startQuizBtn" onclick="startQuiz()" disabled>I have submitted the form – Start Quiz</button>
+
+  <div id="quiz"></div>
+  <div id="result"></div>
+
+  <script>
+    const questions = [
+  {
+    q: "How do you usually wake up in the morning?",
+    options: [
+      { text: "Peacefully, feeling refreshed and ready for the day.", points: 3 },
+      { text: "Restless and eager to check notifications or start working.", points: 2 },
+      { text: "Groggy, tired, and hitting snooze repeatedly.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you make important decisions?",
+    options: [
+      { text: "Calmly, after introspection and considering long-term benefits.", points: 3 },
+      { text: "With urgency, driven by goals and deadlines.", points: 2 },
+      { text: "I avoid or postpone making them.", points: 1 }
+    ]
+  },
+  {
+    q: "What motivates you to work or take action?",
+    options: [
+      { text: "A sense of duty and inner satisfaction.", points: 3 },
+      { text: "Desire for success, recognition, or wealth.", points: 2 },
+      { text: "Fear of loss, laziness, or force by others.", points: 1 }
+    ]
+  },
+  {
+    q: "What kind of food do you prefer?",
+    options: [
+      { text: "Fresh, healthy, and sattvic (fruit, grains, vegetables).", points: 3 },
+      { text: "Spicy, oily, or stimulating foods (coffee, meat, sugar).", points: 2 },
+      { text: "Stale, leftover, or excessively processed food.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you respond to conflicts?",
+    options: [
+      { text: "Stay calm and seek a balanced resolution.", points: 3 },
+      { text: "Argue intensely and push to win.", points: 2 },
+      { text: "Avoid the situation altogether or shut down.", points: 1 }
+    ]
+  },
+  {
+    q: "What’s your relationship with knowledge?",
+    options: [
+      { text: "I seek self-realization and truth.", points: 3 },
+      { text: "I learn to gain advantage or compete.", points: 2 },
+      { text: "I feel it’s boring or unnecessary.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you react to praise or success?",
+    options: [
+      { text: "Stay grounded and grateful.", points: 3 },
+      { text: "Feel proud and crave more attention.", points: 2 },
+      { text: "Feel surprised, suspicious, or indifferent.", points: 1 }
+    ]
+  },
+  {
+    q: "How is your general mental state?",
+    options: [
+      { text: "Clear, peaceful, and focused.", points: 3 },
+      { text: "Anxious, ambitious, or over-stimulated.", points: 2 },
+      { text: "Dull, confused, or negative.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you handle failure?",
+    options: [
+      { text: "Reflect and grow from the experience.", points: 3 },
+      { text: "Get frustrated or angry but try harder.", points: 2 },
+      { text: "Give up or blame others.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you spend your free time?",
+    options: [
+      { text: "Reading, learning, or meditating.", points: 3 },
+      { text: "Watching shows, partying, or networking.", points: 2 },
+      { text: "Sleeping, overeating, or scrolling aimlessly.", points: 1 }
+    ]
+  },
+  {
+    q: "What kind of company do you prefer?",
+    options: [
+      { text: "Uplifting, wise, and peaceful people.", points: 3 },
+      { text: "Energetic, ambitious, and action-oriented people.", points: 2 },
+      { text: "Easygoing, gossip-loving, or careless people.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you handle anger?",
+    options: [
+      { text: "Acknowledge it and respond mindfully.", points: 3 },
+      { text: "Express it openly and forcefully.", points: 2 },
+      { text: "Suppress it or let it turn into resentment.", points: 1 }
+    ]
+  },
+  {
+    q: "What is your view on life’s purpose?",
+    options: [
+      { text: "To evolve spiritually and serve others.", points: 3 },
+      { text: "To achieve success and enjoy life.", points: 2 },
+      { text: "Life has no clear purpose.", points: 1 }
+    ]
+  },
+  {
+    q: "What kind of entertainment do you enjoy?",
+    options: [
+      { text: "Thought-provoking, inspiring, or spiritual content.", points: 3 },
+      { text: "Action-packed, competitive, or romantic dramas.", points: 2 },
+      { text: "Dark, violent, or escapist content.", points: 1 }
+    ]
+  },
+  {
+    q: "What is your sleep pattern like?",
+    options: [
+      { text: "Regular and refreshing.", points: 3 },
+      { text: "Irregular, often late nights.", points: 2 },
+      { text: "Oversleeping or excessive naps.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you handle responsibility?",
+    options: [
+      { text: "Embrace it with humility and clarity.", points: 3 },
+      { text: "Take it to gain control or recognition.", points: 2 },
+      { text: "Avoid or neglect it.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you manage your emotions?",
+    options: [
+      { text: "Aware and accepting of them.", points: 3 },
+      { text: "Use them to drive action or reaction.", points: 2 },
+      { text: "Confused or overwhelmed by them.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you treat people who disagree with you?",
+    options: [
+      { text: "Listen and try to understand.", points: 3 },
+      { text: "Convince or challenge them.", points: 2 },
+      { text: "Avoid them or speak behind their back.", points: 1 }
+    ]
+  },
+  {
+    q: "How do you approach personal growth?",
+    options: [
+      { text: "With self-discipline and regular introspection.", points: 3 },
+      { text: "Through goals, mentors, and motivation.", points: 2 },
+      { text: "I don’t think much about growth.", points: 1 }
+    ]
+  },
+  {
+    q: "What is your connection with spirituality?",
+    options: [
+      { text: "Deep and consistent spiritual practice.", points: 3 },
+      { text: "Curious but irregular involvement.", points: 2 },
+      { text: "Rare or non-existent interest.", points: 1 }
+    ]
+  }    
+];
+
+    let current = 0;
+    let score = 0;
+
+    const quizContainer = document.getElementById('quiz');
+    const resultContainer = document.getElementById('result');
+
+    setTimeout(() => {
+    document.getElementById('startQuizBtn').disabled = false;
+    document.getElementById('startQuizBtn').style.cursor = 'pointer';
+    }, 00000);
+
+
+    function startQuiz() {
+      document.getElementById('startQuizBtn').style.display = 'none';
+      quizContainer.style.display = 'block';
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('fill-form').style.display = 'none';
+      showQuestion(current);
+    }
+
+    function showQuestion(index) {
+      const q = questions[index];
+      quizContainer.innerHTML = `<div class="question"><h2>Q${index + 1}. ${q.q}</h2></div>`;
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'options';
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.textContent = opt.text;
+        btn.className = opt.points === 3 ? 'sattva' : opt.points === 2 ? 'rajas' : 'tamas';
+        btn.onclick = () => {
+          score += opt.points;
+          current++;
+          if (current < questions.length) {
+            showQuestion(current);
+          } else {
+            showResult();
+          }
+        };
+        optionsDiv.appendChild(btn);
+      });
+
+      quizContainer.appendChild(optionsDiv);
+    }
+
+    function showResult() {
+      quizContainer.innerHTML = '';
+      resultContainer.style.display = 'block';
+       document.getElementById('quiz').style.display = 'none';
+
+      resultContainer.innerHTML = `
+        <h2>Your Result</h2>
+        <p><strong>Total Score:</strong> ${score}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
