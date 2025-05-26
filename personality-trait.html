@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Personality Trait</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -30,7 +32,7 @@
     font-size: 16px;
     text-align: left;
     box-sizing: border-box;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
   }
 
   #startQuizBtn {
@@ -40,8 +42,13 @@
     background: #4CAF50;
     color: white;
     border: none;
+    cursor: not-allowed;
     display: block;
     text-align: left;
+  }
+  #startQuizBtn:hover {
+    cursor: pointer;
+    border-color: #4CAFFF;
   }
 
   @media (max-width: 480px) {
@@ -57,6 +64,10 @@
     #startQuizBtn {
       font-size: 14px;
       padding: 8px 16px;
+    }
+    #startQuizBtn:hover {
+      cursor: pointer;
+      border-color: #4CAFFF;
     }
   }
 </style>
@@ -245,6 +256,7 @@
     const quizContainer = document.getElementById('quiz');
     const resultContainer = document.getElementById('result');
 
+
     function startQuiz() {
       document.getElementById('startQuizBtn').style.display = 'none';
       quizContainer.style.display = 'block';
@@ -278,16 +290,34 @@
       quizContainer.appendChild(optionsDiv);
     }
 
-    function showResult() {
-      quizContainer.innerHTML = '';
-      resultContainer.style.display = 'block';
-       document.getElementById('quiz').style.display = 'none';
+function showResult() {
+  quizContainer.innerHTML = '';
+  resultContainer.style.display = 'block';
+  document.getElementById('quiz').style.display = 'none';
 
-      resultContainer.innerHTML = `
-        <h2>Your Result</h2>
-        <p><strong>Total Score:</strong> ${score}</p>
-      `;
-    }
-  </script>
+  const resultText = `Your Total Score: ${score}\nDate: ${new Date().toLocaleString()}`;
+  
+  resultContainer.innerHTML = `
+    <h2>Your Result</h2>
+    <p><strong>Total Score:</strong> ${score}</p>
+    <button onclick="downloadResult()">Download Result</button>
+  `;
+
+  // Store the result in a variable to be downloaded
+  window.finalResultText = resultText;
+}
+async function downloadResult() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const text = window.finalResultText || `Your Total Score: ${score}\nDate: ${new Date().toLocaleString()}`;
+  
+  const lines = doc.splitTextToSize(text, 180); // Wrap lines at ~180 units width
+  doc.text(lines, 10, 20);
+
+  doc.save('personality_quiz_result.pdf');
+}
+
+</script>
 </body>
 </html>
