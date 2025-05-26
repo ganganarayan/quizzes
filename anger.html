@@ -1,3 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anger Style</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f0f5f1;
+    color: #333;
+    margin: 0;
+  }
+
+  #quiz,
+  #result {
+    display: none;
+    width: 100%;
+    max-width: 700px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .options button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+    box-sizing: border-box;
+    background-color: #ffffff;
+  }
+
+  #startQuizBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    display: block;
+    text-align: left;
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 10px;
+    }
+
+    .options button {
+      font-size: 14px;
+      padding: 12px;
+    }
+
+    #startQuizBtn {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Anger Style</h1>
+
+  <p id="fill-form">Please fill out the following form to continue:</p>
+
+  <iframe  id="form" src="https://docs.google.com/forms/d/e/1FAIpQLSeWdz89JkBlm6-GsBvBhM6zh5chPZq1PDSmuC7CSzv8mebgaw/viewform?embedded=true"
+    width="640" height="687" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+  <button id="startQuizBtn" onclick="startQuiz()">I have submitted the form – Start Quiz</button>
+
+  <div id="quiz"></div>
+  <div id="result"></div>
+  <script>
+    const questions = [
 {
   "title": "What's Your Anger Style?",
   "instructions": "Choose the option that best reflects how you usually feel or act.",
@@ -98,3 +176,4 @@
     }
   }
 }
+]
